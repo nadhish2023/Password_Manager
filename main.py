@@ -1,6 +1,8 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 import random
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
@@ -21,26 +23,33 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_to_file(website,username,password):
-    file=open("password.txt","a")
-    data=' | '.join([website,username,password,"\n"])
-    file.write(data)
-    file.close()
+    new_data = {website: {"username": username, "password":password}}
+    try:
+        with open("data.json","r") as data_file:
+            data=json.load(data_file)
+    except FileNotFoundError:
+        with open("data.json","w") as data_file:
+            json.dump(new_data,data_file,indent=4)
+    else:
+        data.update(new_data)
+        with open("data.json","w") as data_file:
+            json.dump(data,data_file,indent=4)
 
 # ---------------------------- UI SETUP ------------------------------- #
 
 root=Tk()
 root.title("Password-Manager")
-root.config(padx=50,pady=50,bg="White")
+root.config(padx=50,pady=50)
 
-canvas=Canvas(height=200,width=200,bg="White",highlightthickness=0)
+canvas=Canvas(height=200,width=200)
 pht_img=PhotoImage(file="logo.png")
 canvas.create_image(100,100,image=pht_img)
 canvas.grid(row=0,column=1,sticky="e")
 
 website_label=Label(root,text="Website:")
 website_label.grid(row=1,column=0)
-website_entry=Entry(root,width=53)
-website_entry.grid(row=1,column=1,columnspan=2)
+website_entry=Entry(root,width=37)
+website_entry.grid(row=1,column=1)
 website_entry.focus()
 
 username_label=Label(root,text="UserName:")
@@ -75,6 +84,29 @@ def insert_password():
     password=generate_password()
     password_entry.delete(0,END)
     password_entry.insert(0,password)
+
+def search():
+    website=website_entry.get()
+    first_line=f"Website -- {website}"
+    second_line=""
+    third_line=""
+    try:
+        with open("data.json","r") as data_file:
+            data=json.load(data_file)
+            username=data[website]["username"]
+            password=data[website]["password"]
+    except FileNotFoundError:
+        second_line="DATA NOT FOUND!!!"
+    except KeyError:
+        second_line="DATA NOT FOUND!!!"
+    else:
+        second_line=f"Username : {username}"
+        third_line=f"Password  : {password}"
+    messagebox.showinfo(title="Search Result",message=f"{first_line}\n{second_line}\n{third_line}")
+
+
+search_button=Button(root,text="Search",width=12,command=search)
+search_button.grid(row=1,column=2)
 
 generate_button=Button(root,text="Generate",command=insert_password,width=12)
 generate_button.grid(row=3,column=2,sticky="e")
