@@ -1,14 +1,14 @@
 # Password Manager
 
 ## Overview
-The **Password Manager** is a simple and efficient tool built using Python and Tkinter to help users generate, store, and manage their passwords securely. It ensures that users can generate strong passwords and save them in a structured format.
+This is an advanced Password Manager built using Python and Tkinter. It allows users to generate, store, and retrieve passwords securely using a JSON-based database.
 
 ## Features
-- **Random Password Generation**: Creates secure passwords using a mix of uppercase, lowercase, numbers, and special characters.
-- **Save Credentials**: Stores website, username, and password in a text file (`password.txt`).
-- **Clipboard Support**: Automatically copies the generated password to the clipboard for easy pasting.
-- **User Confirmation**: Asks for confirmation before saving credentials to prevent accidental entries.
-- **Graphical User Interface (GUI)**: Built using Tkinter for an intuitive user experience.
+- **Password Generation:** Generates strong passwords containing uppercase letters, lowercase letters, numbers, and special characters.
+- **Clipboard Copy:** Automatically copies the generated password to the clipboard.
+- **Password Storage:** Saves passwords securely in `data.json`.
+- **Password Retrieval:** Allows users to search for saved credentials.
+- **User-friendly UI:** Built with Tkinter for an easy-to-use interface.
 
 ## Installation
 
@@ -29,18 +29,19 @@ python main.py
 ```
 
 ## Usage
-1. Enter the **Website** and **Username**.
+1. Enter the **Website** and **Username** in the respective fields.
 2. Click **Generate** to create a strong password.
-3. Click **Add** to save the credentials in `password.txt`.
-4. The password is automatically copied to the clipboard.
+3. Click **Add** to save the credentials to `data.json`.
+4. Use **Search** to retrieve saved credentials.
+5. The password will be copied to the clipboard automatically.
 
 ## File Structure
 ```plaintext
 password-manager/
-│── main.py       # Main program
-│── logo.png      # App logo
-│── password.txt  # Stored passwords (auto-created)
-│── README.md     # Project documentation
+├── main.py        # Main application file
+├── logo.png       # Logo image for the UI
+├── data.json      # Stores saved passwords
+├── README.md      # Documentation
 ```
 
 ## Screenshot
